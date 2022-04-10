@@ -36,7 +36,7 @@ npm i
 npm run build
 
 # 创建数据库和表
-npm run install
+npm run db
 
 # 启动服务
 npm start
