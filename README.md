@@ -1,6 +1,6 @@
 # noco next demo
 
-演示如何简单的使用 nocobase 服务器端。
+演示如何简单的使用 [nocobase](https://github.com/nocobase/nocobase) 服务器端。
 
 ## 下载和构建 nocobase
 
