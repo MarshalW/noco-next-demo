@@ -1,5 +1,9 @@
 import { Application } from "@nocobase/server";
 
+import PluginErrorHandler from "@nocobase/plugin-error-handler";
+import UserPlugin from "@nocobase/plugin-users";
+import PluginACL from "@nocobase/plugin-acl";
+
 const app = new Application({
   database: {
     dialect: "sqlite",
@@ -11,14 +15,10 @@ const app = new Application({
   },
 });
 
-const plugins = [
-  ["@nocobase/plugin-error-handler"] as any,
-  ["@nocobase/plugin-users"],
-  ["@nocobase/plugin-acl"],
-];
+const plugins = [PluginErrorHandler, UserPlugin, PluginACL];
 
-for (const [plugin, options = null] of plugins) {
-  app.plugin(require(plugin).default, options);
+for (const plugin of plugins) {
+  app.plugin(plugin);
 }
 
 app.parse(process.argv);

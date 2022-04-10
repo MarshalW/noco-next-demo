@@ -21,6 +21,26 @@ npm run build
 ## 下载和构建本项目
 
 ```bash
+# clone 项目
+git clone https://github.com/MarshalW/noco-next-demo.git
+cd noco-next-demo
+
+# 安装必要的依赖包
+npm i
+
+# 将nocobase中需要的package复制到 ./node_modules
+# ../nocobase/ 是nocobase的相对路径或者绝对路径
+./cp-nocobase-packages.sh ../nocobase/ 
+
+# 构建项目
+npm run build
+
+# 创建数据库和表
+npm run install
+
+# 启动服务
+npm start
+
 
 
 ```
