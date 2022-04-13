@@ -40,6 +40,9 @@ npm run db
 
 # 启动服务
 npm start
+
+# 运行所有测试
+npm test
 ```
 
 ## 使用
