@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "npm run clean && tsc ",
     "start": "node lib/app.js start --port 3000",
     "db": "rimraf ./test.sqlite && node lib/app.js install --force",
@@ -14,23 +14,34 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@formily/json-schema": "^2.0.18",
+    "@formily/json-schema": "^2.0.15",
     "@koa/cors": "^3.3.0",
+    "@types/koa-mount": "^4.0.1",
+    "@types/koa-static": "^4.0.2",
     "@umijs/utils": "^3.3.12",
     "async-mutex": "^0.3.2",
     "deepmerge": "^4.2.2",
     "find-package-json": "^1.2.0",
     "flat": "^5.0.2",
+    "flatted": "^3.2.5",
     "i18next": "^21.6.14",
     "json-templates": "^4.2.0",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "lodash": "^4.17.21",
     "sequelize": "^6.18.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "swagger2": "^3.0.1",
+    "swagger2-koa": "^3.0.1"
   },
   "devDependencies": {
-    "@types/node": "^17.0.23",
+    "@types/jest": "^27.4.1",
+    "@types/supertest": "^2.0.12",
+    "jest": "^27.5.1",
+    "rimraf": "^3.0.2",
+    "supertest": "^6.2.2",
+    "ts-jest": "^27.1.4",
     "typescript": "^4.6.3"
   }
 }

@@ -42,32 +42,21 @@ npm run db
 npm start
 ```
 
-## 测试是否可用
+## 使用
 
 ```bash
 
 # 登录
-curl -s --location --request POST 'http://localhost:3000/api/users:signin' \
+TOKEN=$(curl -s --location --request POST 'http://localhost:3000/api/users:signin' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "email":"admin@nocobase.com",
     "password":"admin123"
-}' | jq .
-{
-  "data": {
-    "id": 1,
-    "createdAt": "2022-04-10T04:14:43.177Z",
-    "updatedAt": "2022-04-10T04:34:31.370Z",
-    "nickname": "Super Admin",
-    "email": "admin@nocobase.com",
-    "appLang": null,
-    "token": "cd1deca4f20b48e60be2860a4e4066a241e80a5a"
-  }
-}
+}' | jq -j .data.token)
 
 # 查看 users
 curl -s  --location --request GET 'http://localhost:3000/api/users' \
---header 'Authorization: Bearer cd1deca4f20b48e60be2860a4e4066a241e80a5a' | jq .
+--header "Authorization: Bearer $TOKEN" | jq .
 
 {
   "data": [
@@ -86,6 +75,64 @@ curl -s  --location --request GET 'http://localhost:3000/api/users' \
     "pageSize": 20,
     "totalPage": 1
   }
+}
+
+# 查看 posts
+curl -s  --location --request GET 'http://localhost:3000/api/posts' \
+--header "Authorization: Bearer $TOKEN" | jq .
+
+{
+  "data": [],
+  "meta": {
+    "count": 0,
+    "page": 1,
+    "pageSize": 20,
+    "totalPage": 0
+  }
+}
+
+# 注册用户 zhangsan
+curl -X POST -H "Content-Type: application/json" \
+--header "Authorization: Bearer $TOKEN" \
+    -d '{"email":"zhangsan@163.com","password":"password"}' \
+    http://localhost:3000/api/users
+
+# zhangsan 登录
+TOKEN=$(curl -s --location --request POST 'http://localhost:3000/api/users:signin' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email":"zhangsan@163.com",
+    "password":"password"
+}' | jq -j .data.token)
+
+# zhangsan 创建 post
+curl -s --location --request POST 'http://localhost:3000/api/posts' \
+--header 'Content-Type: application/json' \
+--header "Authorization: Bearer $TOKEN" \
+--data-raw '{
+    "title":"Hello world",
+    "content":"my first blog."
+}' | jq .
+{
+  "data": {
+    "id": 1,
+    "title": "Hello world",
+    "content": "my first blog.",
+    "updatedAt": "2022-04-12T03:28:32.811Z",
+    "createdAt": "2022-04-12T03:28:32.811Z",
+    "createdById": 2
+  }
+}
+
+# zhangsan 修改 post
+curl -s --location --request PUT 'http://localhost:3000/api/posts/2' \
+--header 'Content-Type: application/json' \
+--header "Authorization: Bearer $TOKEN" \
+--data-raw '{
+    "title":"Hi~"
+}' | jq .
+{
+  "data": []
 }
 
 ```

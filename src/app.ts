@@ -1,9 +1,5 @@
 import { Application } from "@nocobase/server";
 
-import PluginErrorHandler from "@nocobase/plugin-error-handler";
-import UserPlugin from "@nocobase/plugin-users";
-import PluginACL from "@nocobase/plugin-acl";
-
 const app = new Application({
   database: {
     dialect: "sqlite",
@@ -15,10 +11,24 @@ const app = new Application({
   },
 });
 
-const plugins = [PluginErrorHandler, UserPlugin, PluginACL];
 
-for (const plugin of plugins) {
-  app.plugin(plugin);
+// 加载插件
+const plugins = [
+  ["@nocobase/plugin-acl"],
+  ["@nocobase/plugin-error-handler"],
+  [
+    "@nocobase/plugin-users",
+    {
+      jwt: {
+        secret: "randomstring",
+      },
+    },
+  ],
+  ["./blog"],
+];
+
+for (const [plugin, options = null] of plugins) {
+  app.plugin(require(plugin as string).default, options);
 }
 
 app.parse(process.argv);
