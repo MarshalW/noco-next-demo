@@ -11,7 +11,6 @@ const app = new Application({
   },
 });
 
-
 // 加载插件
 const plugins = [
   ["@nocobase/plugin-acl"],
