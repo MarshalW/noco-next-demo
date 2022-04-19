@@ -1,9 +1,9 @@
 /*
  * @Author: pangff
  * @Date: 2022-04-14 20:09:21
- * @LastEditTime: 2022-04-18 16:27:37
+ * @LastEditTime: 2022-04-18 16:47:05
  * @LastEditors: pangff
- * @Description: 
+ * @Description: 基于isuue #1的Api方式测试用例
  * @FilePath: /noco-next-demo/src/__tests__/colletions.test.ts
  * stay hungry,stay foolish
  */
@@ -23,8 +23,8 @@ describe("collections test", () => {
             registerActions: true,
             database: {
                 dialect: "sqlite",
-                // storage: ":memory:",
-                storage: "/Users/pangff/Downloads/tmp.sqlite",
+                storage: ":memory:",
+                // storage: "/tmp/tmp.sqlite",
                 logging: false,
             },
             resourcer: {
