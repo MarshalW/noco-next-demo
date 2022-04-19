@@ -20,6 +20,7 @@
     "@types/koa-static": "^4.0.2",
     "@umijs/utils": "^3.3.12",
     "async-mutex": "^0.3.2",
+    "commander": "^9.2.0",
     "deepmerge": "^4.2.2",
     "find-package-json": "^1.2.0",
     "flat": "^5.0.2",
