@@ -1,13 +1,4 @@
 #!/bin/bash
-###
-# @Author: pangff
-# @Date: 2022-04-13 15:42:47
-# @LastEditTime: 2022-04-19 09:49:58
-# @LastEditors: pangff
-# @Description: 复制脚本
-# @FilePath: /noco-next-demo/cp-nocobase-packages.sh
-# stay hungry,stay foolish
-###
 
 nocobase_dir=$1
 
@@ -32,6 +23,14 @@ packages=(
     "acl"
     "users"
     "error-handler"
+    "collection-manager"
+    "ui-schema-storage"
+    "ui-routes-storage"
+    "file-manager"
+    "system-settings"
+    "china-region"
+    "workflow"
+    "client"
 )
 
 for package in ${packages[@]}; do
