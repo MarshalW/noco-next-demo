@@ -1,7 +1,7 @@
 /*
  * @Author: pangff
  * @Date: 2022-04-14 20:09:21
- * @LastEditTime: 2022-04-18 16:47:05
+ * @LastEditTime: 2022-04-28 09:07:55
  * @LastEditors: pangff
  * @Description: 基于isuue #1的Api方式测试用例
  * @FilePath: /noco-next-demo/src/__tests__/colletions.test.ts
@@ -300,7 +300,7 @@ describe("collections test", () => {
                 expect(response.statusCode).toEqual(200);
             }
         }
-        //读取文章列表，确定总数 200
+        //读取文章列表，确定总数 100
         response = await request(app.callback())
             .get(`/api/posts:list`)
             .query({paginate: false});
@@ -359,7 +359,7 @@ describe("collections test", () => {
         expect(lisi.token).toBeDefined();
 
 
-        // 创建多标签文章;
+        // 创建文章;
         response = await request(app.callback())
             .post("/api/posts:create")
             .set("Authorization", `Bearer ${zhangsan.token}`)
