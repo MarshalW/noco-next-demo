@@ -1,7 +1,7 @@
 /*
  * @Author: pangff
  * @Date: 2022-04-14 19:57:25
- * @LastEditTime: 2022-04-15 16:39:30
+ * @LastEditTime: 2022-04-29 15:45:12
  * @LastEditors: pangff
  * @Description: 
  * @FilePath: /noco-next-demo/src/blog/collections/comments.ts
@@ -16,5 +16,6 @@ export default {
     fields: [
       { name: "content", type: "text" },
       { name: "user", type: "belongsTo", target: "users" },
+      { name: "audited", type: "boolean"}
     ],
 } as CollectionOptions;

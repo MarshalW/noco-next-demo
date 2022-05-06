@@ -101,8 +101,6 @@ describe("app test", () => {
 
     // anonymous 用户 读取文章
     response = await request(app.callback()).get(`/api/posts/${post.id}`);
-    expect(response.statusCode).toEqual(200);
-    expect(response.body.data.title).toEqual("Hello world");
-    expect(response.body.data.content).toEqual("my first posts.");
+    expect(response.statusCode).toEqual(204);
   });
 });

@@ -1,10 +1,10 @@
 /*
  * @Author: pangff
  * @Date: 2022-04-14 20:09:21
- * @LastEditTime: 2022-04-28 09:07:55
+ * @LastEditTime: 2022-05-06 16:57:37
  * @LastEditors: pangff
  * @Description: 基于isuue #1的Api方式测试用例
- * @FilePath: /noco-next-demo/src/__tests__/colletions.test.ts
+ * @FilePath: /noco-next-demo/src/__tests__/collections.test.ts
  * stay hungry,stay foolish
  */
 import { Application } from "@nocobase/server";
@@ -149,6 +149,8 @@ describe("collections test", () => {
             .set("Authorization", `Bearer ${zhangsan.token}`)
             .send({
                 title: "测试文章",
+                hidden: false,
+                published : true,
                 content: "iOS、Android、Harmony.",
                 user: zhangsan.id,
                 tags: tagArray
@@ -157,7 +159,9 @@ describe("collections test", () => {
         let post = response.body.data;
 
         //读取文章的标签
-        response = await request(app.callback()).get(`/api/posts/${post.id}/tags:list`);
+        response = await request(app.callback())
+        .get(`/api/posts/${post.id}/tags:list`)
+        .set("Authorization", `Bearer ${zhangsan.token}`);
         expect(response.statusCode).toEqual(200);
         expect(response.body.data.length).toEqual(2);
         expect(response.body.data[0].name).toEqual("科技");
@@ -238,6 +242,8 @@ describe("collections test", () => {
                     .send({
                         title: "张三发的科技文章",
                         content: "张三发的科技文章",
+                        hidden: false,
+                        published : true,
                         user: zhangsan.id,
                         tags: [tagArray[0]]
                     });
@@ -249,6 +255,8 @@ describe("collections test", () => {
                     .send({
                         title: "张三发的国际文章",
                         content: "张三发的国际文章",
+                        hidden: false,
+                        published : true,
                         user: zhangsan.id,
                         tags: [tagArray[1]]
                     });
@@ -261,6 +269,8 @@ describe("collections test", () => {
                     .send({
                         title: "pangff发的科技文章",
                         content: "pangff发的科技文章",
+                        hidden: false,
+                        published : true,
                         user: pangff.id,
                         tags: [tagArray[0]]
                     });
@@ -272,6 +282,8 @@ describe("collections test", () => {
                     .send({
                         title: "pangff发的国际文章",
                         content: "pangff发的国际文章",
+                        hidden: false,
+                        published : true,
                         user: pangff.id,
                         tags: [tagArray[1]]
                     });
@@ -283,6 +295,8 @@ describe("collections test", () => {
                     .send({
                         title: "lisi发的科技文章",
                         content: "lisi发的科技文章",
+                        hidden: false,
+                        published : true,
                         user: lisi.id,
                         tags: [tagArray[0]]
                     });
@@ -294,6 +308,8 @@ describe("collections test", () => {
                     .send({
                         title: "lisi发的国际文章",
                         content: "lisi发的国际文章",
+                        hidden: false,
+                        published : true,
                         user: lisi.id,
                         tags: [tagArray[1]]
                     });
@@ -303,6 +319,7 @@ describe("collections test", () => {
         //读取文章列表，确定总数 100
         response = await request(app.callback())
             .get(`/api/posts:list`)
+            .set("Authorization", `Bearer ${lisi.token}`)
             .query({paginate: false});
         expect(response.statusCode).toEqual(200);
         expect(response.body.data.length).toEqual(100);
@@ -310,6 +327,7 @@ describe("collections test", () => {
         //根据用户 pangff 查询文章列表 34
         response = await request(app.callback())
             .get(`/api/posts:list`)
+            .set("Authorization", `Bearer ${pangff.token}`)
             .query({paginate: false, filter:{ userId: pangff.id}});
         expect(response.statusCode).toEqual(200);
         expect(response.body.data.length).toEqual(34);
@@ -317,6 +335,7 @@ describe("collections test", () => {
         //根据科技-tag分页查询文章列表 10
         response = await request(app.callback())
             .get(`/api/tags/${tagArray[0].id}/posts:list`)
+            .set("Authorization", `Bearer ${pangff.token}`)
             .query({ page: 1, pageSize: 10 });
         expect(response.statusCode).toEqual(200);
         expect(response.body.data.length).toEqual(10);
@@ -402,7 +421,9 @@ describe("collections test", () => {
         expect(response.statusCode).toEqual(200);
 
         //获取文章下的全部评论
-        response = await request(app.callback()).get(`/api/posts/${post.id}/comments:list`);
+        response = await request(app.callback())
+        .get(`/api/posts/${post.id}/comments:list`)
+        .set("Authorization", `Bearer ${pangff.token}`);
         expect(response.statusCode).toEqual(200);
         expect(response.body.data[0].content).toEqual(`my comment >>> ${zhangsan.nickname}`);
         expect(response.body.data[1].content).toEqual(`my comment >>> ${pangff.nickname}`);
@@ -412,6 +433,7 @@ describe("collections test", () => {
         //分页查看post下的comments 该posts下有3个评论
         response = await request(app.callback())
             .get(`/api/posts/${post.id}/comments:list`)
+            .set("Authorization", `Bearer ${pangff.token}`)
             .query({ page: 1, pageSize: 2 });
         expect(response.statusCode).toEqual(200);
         expect(response.body.meta.count).toEqual(3);
@@ -421,6 +443,7 @@ describe("collections test", () => {
         //查看张三下所有评论 应该有1条
         response = await request(app.callback())
             .get(`/api/comments:list`)
+            .set("Authorization", `Bearer ${zhangsan.token}`)
             .query({ paginate: false, filter:{userId: zhangsan.id }});
         expect(response.statusCode).toEqual(200);
         expect(response.body.data.length).toEqual(1);
@@ -435,6 +458,7 @@ describe("collections test", () => {
         //再次查看张三下所有评论 应该没有删除还有1条
         response = await request(app.callback())
             .get(`/api/comments:list`)
+            .set("Authorization", `Bearer ${zhangsan.token}`)
             .query({ paginate: false,filter: { userId: zhangsan.id } })
         expect(response.statusCode).toEqual(200);
         expect(response.body.data.length).toEqual(1);
@@ -449,6 +473,7 @@ describe("collections test", () => {
         //再次查看张三下所有评论 应该有0条
         response = await request(app.callback())
             .get(`/api/comments:list`)
+            .set("Authorization", `Bearer ${zhangsan.token}`)
             .query({ paginate: false, filter: { userId: zhangsan.id } });
         expect(response.statusCode).toEqual(200);
         expect(response.body.data.length).toEqual(0);

@@ -1,7 +1,7 @@
 /*
  * @Author: pangff
  * @Date: 2022-04-14 09:27:11
- * @LastEditTime: 2022-04-14 19:59:08
+ * @LastEditTime: 2022-04-29 15:46:08
  * @LastEditors: pangff
  * @Description:
  * @FilePath: /noco-next-demo/src/blog/collections/posts.ts
@@ -20,5 +20,7 @@ export default {
     { name: "tags", type: "belongsToMany" },
     { name: "comments", type: "hasMany" },
     { name: "user", type: "belongsTo", target: "users" },
+    { name: "hidden", type: "boolean"},
+    { name: "published", type: "boolean"}
   ],
 } as CollectionOptions;

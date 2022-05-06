@@ -1,5 +1,15 @@
+/*
+ * @Author: pangff
+ * @Date: 2022-04-14 09:27:11
+ * @LastEditTime: 2022-05-06 17:24:55
+ * @LastEditors: pangff
+ * @Description: server
+ * @FilePath: /noco-next-demo/src/blog/server.ts
+ * stay hungry,stay foolish
+ */
 import { Plugin } from "@nocobase/server";
 import { resolve } from "path";
+import InitAcl from "./acl";
 // import * as postsActions from "./actions/posts";
 
 export default class PluginBlog extends Plugin {
@@ -14,55 +24,10 @@ export default class PluginBlog extends Plugin {
   }
 
   async install() {
+    
     this.app.on("afterInstall", async () => {
-      // 设置 strategy，只能更新自己创建的posts
-      const Role = this.db.getCollection("roles");
-
-      // writer role strategy
-      let role = await Role.repository.create({
-        values: {
-          name: "writer",
-          title: "Writer",
-          strategy: {
-            actions: ["update:own", "create", "view", "destroy:own"],
-          },
-        },
-      });
-
-      const Scope = this.db.getCollection("rolesResourcesScopes");
-      let scope = await Scope.repository.findOne({
-        filter: {
-          key: "own",
-        },
-      });
-
-      // writer role detail resource action
-      await Role.repository
-        .relation("resources")
-        .of("writer")
-        .create({
-          values: {
-            name: "posts",
-            actions: [
-              {
-                name: "hello",
-              },
-            ],
-          },
-        });
-
-      // anonymous
-      await Role.repository.update({
-        filter: {
-          name: "anonymous",
-        },
-        values: {
-          strategy: {
-            allowConfigure: true,
-            actions: ["view"],
-          },
-        },
-      });
+      const acl = new InitAcl();
+      await acl.init(this.db)
     });
   }
 }
