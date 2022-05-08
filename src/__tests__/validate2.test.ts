@@ -1,6 +1,6 @@
 import { Application } from "@nocobase/server";
 import request from "supertest";
-import updateValidators from "server-validator-nocobase";
+import { updateValidators } from "server-validator-nocobase";
 
 class MockServer extends Application {}
 

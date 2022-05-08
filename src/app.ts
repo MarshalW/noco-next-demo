@@ -62,7 +62,7 @@ for (const [plugin, options = null] of plugins) {
 }
 
 // 补丁，临时服务器端校验
-addValidate(app);
+addValidate(app,process.env.VALIDATOR_PATH);
 
 app.parse(process.argv);
 

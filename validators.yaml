@@ -1,0 +1,6 @@
+validators:
+  - collectionName: 'posts'
+    fieldValidators:
+      - name: 'email'
+        type: 'string'
+        validate: { isEmail: true }

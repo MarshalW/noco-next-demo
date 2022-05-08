@@ -38,8 +38,8 @@
     "lodash": "^4.17.21",
     "mime-match": "^1.0.2",
     "sequelize": "^6.18.0",
-    "sqlite3": "^5.0.2",
-    "server-validator-nocobase" :"^1.0.2"
+    "server-validator-nocobase": "^1.0.6",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
