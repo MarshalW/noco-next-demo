@@ -2,10 +2,10 @@
 ###
 # @Author: pangff
 # @Date: 2022-04-13 15:42:47
-# @LastEditTime: 2022-04-19 09:49:58
-# @LastEditors: pangff
+ # @LastEditTime: 2022-05-18 09:46:27
+ # @LastEditors: pangff
 # @Description: 复制脚本
-# @FilePath: /noco-next-demo/cp-nocobase-packages.sh
+ # @FilePath: /noco-next-demo/cp-nocobase-packages.sh
 # stay hungry,stay foolish
 ###
 
@@ -17,6 +17,7 @@ packages=(
     "database"
     "resourcer"
     "actions"
+    "test"
     "acl"
 )
 
@@ -32,6 +33,7 @@ packages=(
     "acl"
     "users"
     "error-handler"
+    "notifications"
 )
 
 for package in ${packages[@]}; do
