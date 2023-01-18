@@ -4,6 +4,7 @@
   "description": "",
   "main": "lib/app.js",
   "scripts": {
+    "test": "jest",
     "build": "npm run clean && tsc ",
     "start": "node -r dotenv/config lib/app.js start",
     "db": "rimraf ./test.sqlite && node -r dotenv/config lib/app.js install --force",

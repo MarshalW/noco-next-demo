@@ -1,9 +1,9 @@
 import { Application } from "@nocobase/server";
 import { IDatabaseOptions } from "@nocobase/database";
 
-import addValidate from "./patch/validate";
-
 import { resolve } from "path";
+
+import addons from "./addons";
 
 const dialect = process.env.DB_DIALECT as any;
 
@@ -61,8 +61,7 @@ for (const [plugin, options = null] of plugins) {
   app.plugin(require(plugin as string).default, options);
 }
 
-// 补丁，临时服务器端校验
-addValidate(app);
+// 补丁入口
+addons(app);
 
 app.parse(process.argv);
-
